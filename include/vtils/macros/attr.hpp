@@ -56,7 +56,8 @@
 /// if the evaluation causes an exception to be thrown or a function never returns.
 ///
 /// Special care must therefore be applied when using it without C++23 support
-/// for the [[assume(expr)]] attribute.
+/// for the <a href="https://en.cppreference.com/w/cpp/language/attributes/assume">[[assume(expr)]]</a>
+/// attribute.
 #ifndef ASSUME
     // FIXME: Do C++23 [[assume(x)]] for uniform behavior.
 
