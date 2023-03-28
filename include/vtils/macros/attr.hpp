@@ -49,6 +49,26 @@
     #define UNLIKELY [[unlikely]]
 #endif
 
+/// Hints to the compiler that a certain expression holds true for optimization.
+///
+/// This code may or may not evaluate expr, which could be significant if the
+/// evaluation has side effects or take a long time. Behavior may also differ
+/// if the evaluation causes an exception to be thrown or a function never returns.
+///
+/// Special care must therefore be applied when using it without C++23 support
+/// for the [[assume(expr)]] attribute.
+#ifndef ASSUME
+    // FIXME: Do C++23 [[assume(x)]] for uniform behavior.
+
+    #if defined(V_COMPILER_MSVC)
+        #define ASSUME(expr) __assume(expr)
+    #elif defined(V_COMPILER_CLANG)
+        #define ASSUME(expr) __builtin_assume(expr)
+    #else
+        #define ASSUME(expr) do { if (!static_cast<bool>(expr)) { __builtin_unreachable(); } } while (false)
+    #endif
+#endif
+
 /// Raises a warning when the return value of a function is discarded.
 #ifndef NODISCARD
     #define NODISCARD [[nodiscard]]
