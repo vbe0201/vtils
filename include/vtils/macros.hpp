@@ -5,6 +5,7 @@
  */
 #pragma once
 
+#include "vtils/macros/arch.hpp"
 #include "vtils/macros/attr.hpp"
 #include "vtils/macros/compiler.hpp"
 #include "vtils//macros/misc.hpp"

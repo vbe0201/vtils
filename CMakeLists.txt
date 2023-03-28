@@ -41,7 +41,11 @@ add_library(${PROJECT_NAME})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/impl/debug.hpp
+
     PUBLIC FILE_SET HEADERS TYPE HEADERS FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/arch.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/attr.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/compiler.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/misc.hpp
