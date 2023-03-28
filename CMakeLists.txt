@@ -42,6 +42,8 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
     PUBLIC FILE_SET HEADERS TYPE HEADERS FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/attr.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/compiler.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/assert.hpp
 
     PUBLIC

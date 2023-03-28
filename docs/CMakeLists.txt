@@ -2,13 +2,15 @@ find_package(Doxygen REQUIRED)
 find_package(Sphinx REQUIRED)
 
 # Gather all public headers from the target header set.
+# This is a list taht we will convert to a space-separated string.
 get_target_property(
     ${PROJECT_NAME}_PUBLIC_HEADERS
     ${PROJECT_NAME}
     HEADER_SET_HEADERS
 )
+string(REPLACE ";" " " ${PROJECT_NAME}_PUBLIC_HEADERS_STR "${${PROJECT_NAME}_PUBLIC_HEADERS}")
 
-set(DOXYGEN_INPUT ${${PROJECT_NAME}_PUBLIC_HEADERS})
+set(DOXYGEN_INPUT ${${PROJECT_NAME}_PUBLIC_HEADERS_STR})
 set(DOXYGEN_OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/doxygen)
 set(DOXYGEN_INDEX_FILE ${DOXYGEN_OUTPUT}/xml/index.xml)
 set(DOXYFILE_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
@@ -21,7 +23,7 @@ configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT} @ONLY)
 file(MAKE_DIRECTORY ${DOXYGEN_OUTPUT})
 add_custom_command(
     OUTPUT ${DOXYGEN_INDEX_FILE}
-    DEPENDS ${PROJECT_NAME}
+    DEPENDS ${PROJECT_NAME} ${${PROJECT_NAME}_PUBLIC_HEADERS}
     COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE_OUT}
     MAIN_DEPENDENCY ${DOXYFILE_IN} ${DOXYFILE_OUT}
     COMMENT "Generate Doxygen documentation"
