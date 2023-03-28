@@ -1,0 +1,73 @@
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+
+######################
+## Project settings ##
+######################
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+project(vtils
+    VERSION "0.1.0"
+    DESCRIPTION "Portable C++ utility library for personal use"
+    HOMEPAGE_URL "https://github.com/vbe0201/vtils"
+    LANGUAGES CXX
+    )
+
+# Determine whether vtils is the top-level CMake project.
+# Certain build options will be configured based on that.
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    set(VTILS_TOP_LEVEL_PROJECT ON)
+else()
+    set(VTILS_TOP_LEVEL_PROJECT OFF)
+endif()
+
+# Customizable build options.
+option(VTILS_OPT_BUILD_DOCS "Build project documentation" ${VTILS_TOP_LEVEL_PROJECT})
+option(VTILS_OPT_BUILD_TESTS "Build and perform vtils tests" ${VTILS_TOP_LEVEL_PROJECT})
+option(VTILS_OPT_INSTALL "Generate and install vtils target" ${VTILS_TOP_LEVEL_PROJECT})
+
+# Enforce the C++ standard when this is the top-level project.
+if(VTILS_TOP_LEVEL_PROJECT)
+    set(CMAKE_CXX_STANDARD 23)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_EXTENSIONS OFF)
+endif()
+
+#####################
+## Target settings ##
+#####################
+
+add_library(${PROJECT_NAME})
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+target_sources(${PROJECT_NAME}
+    PUBLIC FILE_SET HEADERS TYPE HEADERS FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/assert.hpp
+
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/source/assert.cpp
+    )
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    )
+
+if(VTILS_OPT_INSTALL)
+    # TODO
+endif()
+
+####################
+## Subdirectories ##
+####################
+
+add_subdirectory(third-party)
+
+if(VTILS_OPT_BUILD_DOCS)
+    add_subdirectory(docs)
+endif()
+
+if(VTILS_OPT_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
