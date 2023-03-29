@@ -39,6 +39,11 @@
     #endif
 #endif
 
+/// Hints to the compiler that this function never returns.
+#ifndef NORETURN
+    #define NORETURN [[noreturn]]
+#endif
+
 /// Hint to branch prediction that a path is likely to be taken.
 #ifndef LIKELY
     #define LIKELY [[likely]]

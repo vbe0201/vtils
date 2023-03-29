@@ -20,6 +20,9 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/.gitmodules")
     check_submodules()
 endif()
 
+# fmt
+add_subdirectory(fmt)
+
 # GoogleTest
 if(VTILS_OPT_BUILD_TESTS)
     FetchContent_Declare(googletest
