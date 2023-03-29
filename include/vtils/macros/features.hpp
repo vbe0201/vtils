@@ -24,6 +24,11 @@
             #define V_TARGET_FEATURE_SSE4_1 1
             #define V_TARGET_FEATURE_SSE4_2 1
         #endif
+
+        // MSVC again doesn't define this, so we base it off SSE2.
+        #ifdef V_TARGET_FEATURE_SSE2
+            #define V_TARGET_FEATURE_AESNI 1
+        #endif
     #else
         // GCC and Clang both define these:
         // https://stackoverflow.com/a/28939692
@@ -41,6 +46,9 @@
         #endif
         #ifdef __SSE4_2__
             #define V_TARGET_FEATURE_SSE4_2 1
+        #endif
+        #ifdef __AES__
+            #define V_TARGET_FEATURE_AESNI 1
         #endif
     #endif
 
