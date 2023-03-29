@@ -23,6 +23,8 @@
 #elif defined(__EMSCRIPTEN__)
     #define V_ARCH wasm
     #define V_ARCH_WASM 1
+
+    #define V_ARCH_EMSCRIPTEN_VERSION (__EMSCRIPTEN_major__*10000 + __EMSCRIPTEN_minor__*100 + __EMSCRIPTEN_tiny__)
 #else
     #define V_ARCH generic
     #define V_ARCH_GENERIC 1

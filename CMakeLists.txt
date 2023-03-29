@@ -48,6 +48,7 @@ target_sources(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/arch.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/attr.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/compiler.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/features.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/misc.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/platform.hpp
 
