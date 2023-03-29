@@ -64,14 +64,20 @@
 /// for the <a href="https://en.cppreference.com/w/cpp/language/attributes/assume">[[assume(expr)]]</a>
 /// attribute.
 #ifndef ASSUME
-    // FIXME: Do C++23 [[assume(x)]] for uniform behavior.
-
-    #if defined(V_COMPILER_MSVC)
-        #define ASSUME(expr) __assume(expr)
-    #elif defined(V_COMPILER_CLANG)
-        #define ASSUME(expr) __builtin_assume(expr)
+    #if __has_cpp_attribute(assume)
+        #define ASSUME(expr) [[assume(expr)]]
     #else
-        #define ASSUME(expr) do { if (!static_cast<bool>(expr)) { __builtin_unreachable(); } } while (false)
+        #if defined(V_COMPILER_MSVC)
+            #define ASSUME(expr) __assume(expr)
+        #elif defined(V_COMPILER_CLANG)
+            #define ASSUME(expr) __builtin_assume(expr)
+        #elif __GNUC__ >= 13
+            // GCC 13 blesses us with gnu::assume which is available
+            // to C++20 code on a recent enough compiler.
+            #define ASSUME(expr) [[gnu::assume(expr)]]
+        #else
+            #define ASSUME(expr) do { if (!static_cast<bool>(expr)) { __builtin_unreachable(); } } while (false)
+        #endif
     #endif
 #endif
 
