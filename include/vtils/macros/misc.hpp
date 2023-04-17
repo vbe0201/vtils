@@ -9,10 +9,12 @@
 
 #include "vtils/macros/attr.hpp"
 
+/// @exclude
 #define V_STRINGIFY_IMPL(s) #s
 /// Converts an arbitrary expression to a string literal.
 #define V_STRINGIFY(s) V_STRINGIFY_IMPL(s)
 
+/// @exclude
 #define V_CONCAT_IMPL(s1, s2) s1##s2
 /// Textually concatenates two given tokens.
 #define V_CONCAT(s1, s2) V_CONCAT_IMPL(s1, s2)
@@ -34,6 +36,7 @@
 
 namespace vtils::impl {
 
+    /// @exclude
     template <typename... Args>
     ALWAYS_INLINE constexpr void UnusedImpl(Args &&...args) {
         (static_cast<void>(args), ...);

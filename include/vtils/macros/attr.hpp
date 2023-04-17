@@ -10,7 +10,7 @@
 /// Strong hint to the compiler to inline a function.
 #ifndef ALWAYS_INLINE
     #ifdef V_COMPILER_MSVC
-        #define ALWAYS_INLINE [[msvc::always_inline]]
+        #define ALWAYS_INLINE __forceinline
     #else
         #define ALWAYS_INLINE [[gnu::always_inline]] inline
     #endif
