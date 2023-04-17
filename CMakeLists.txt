@@ -54,6 +54,7 @@ target_sources(${PROJECT_NAME}
 
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/assert.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/scope_guard.hpp
 
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/source/assert.cpp
