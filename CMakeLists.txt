@@ -52,6 +52,10 @@ target_sources(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/misc.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/platform.hpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/condvar.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/mutex.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/read_write_lock.hpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/assert.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/scope_guard.hpp
@@ -59,6 +63,16 @@ target_sources(${PROJECT_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/source/assert.cpp
     )
+
+if (WIN32)
+    # These source files are only included for Windows builds.
+    target_sources(${PROJECT_NAME}
+        PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/condvar.os.windows.hpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/mutex.os.windows.hpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/read_write_lock.os.windows.hpp
+        )
+endif()
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
