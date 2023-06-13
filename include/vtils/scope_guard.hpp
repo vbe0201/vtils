@@ -13,10 +13,8 @@
 
 namespace vtils::impl {
 
-    /// @exclude
     struct ScopeGuardToken {};
 
-    /// @exclude
     template <class Fn>
     class ScopeGuard final {
     private:
@@ -49,7 +47,6 @@ namespace vtils::impl {
 
     // `->*` has the highest precedence of operators we can use for this.
 
-    /// @exclude
     template <class Fn>
     ALWAYS_INLINE static constexpr ScopeGuard<Fn> operator->*(ScopeGuardToken, Fn &&fn) {
         return ScopeGuard<std::decay_t<Fn>>(std::forward<Fn>(fn));
@@ -57,7 +54,6 @@ namespace vtils::impl {
 
 }
 
-/// @exclude
 #define V_IMPL_SCOPE_GUARD(__NAME__, __TOKEN__) \
     auto V_ANON_VAR(__NAME__) = ::vtils::impl::__TOKEN__{}->*[&]() ALWAYS_INLINE_LAMBDA
 

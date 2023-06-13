@@ -11,6 +11,8 @@
 #include <errno.h>
 #include <stdio.h>
 
+#include <sys/mman.h>
+
 #include "vtils/macros/attr.hpp"
 
 namespace vtils::impl {

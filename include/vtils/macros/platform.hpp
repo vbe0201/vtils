@@ -30,6 +30,9 @@
         #define V_PLATFORM macos
         #define V_PLATFORM_MACOS 1
     #endif
+#elif defined(__ANDROID__)
+    #define V_PLATFORM android
+    #define V_PLATFORM_ANDROID 1
 #elif defined(__DragonFly__)
     #define V_PLATFORM dragonfly
     #define V_PLATFORM_DRAGONFLY 1

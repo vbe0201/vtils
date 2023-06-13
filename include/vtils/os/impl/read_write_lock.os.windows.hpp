@@ -13,7 +13,6 @@
 
 namespace vtils::impl {
 
-    /// @exclude
     class ReadWriteLockImpl final {
     private:
         SRWLOCK m_srw = SRWLOCK_INIT;
@@ -23,6 +22,9 @@ namespace vtils::impl {
         // must not be explicitly destroyed or finalized.
         ALWAYS_INLINE constexpr ReadWriteLockImpl() = default;
         ALWAYS_INLINE constexpr ~ReadWriteLockImpl() = default;
+
+        ALWAYS_INLINE void Initialize() {}
+        ALWAYS_INLINE bool Finalize() { return false; }
 
         ALWAYS_INLINE void Read() {
             ::AcquireSRWLockShared(std::addressof(m_srw));

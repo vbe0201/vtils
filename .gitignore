@@ -68,3 +68,8 @@ CMakeCache.txt
 /[Oo]bj/
 /[Rr]elease/
 *.zip
+
+# Devenv
+.devenv*
+devenv.local.nix
+.direnv

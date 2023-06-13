@@ -28,7 +28,6 @@ namespace vtils::impl {
 
     class CondVarImpl;
 
-    /// @exclude
     class MutexImpl final {
         friend class CondVarImpl;
 
@@ -45,6 +44,9 @@ namespace vtils::impl {
         // must not be explicitly destroyed or finalized.
         ALWAYS_INLINE constexpr MutexImpl() = default;
         ALWAYS_INLINE constexpr ~MutexImpl() = default;
+
+        ALWAYS_INLINE void Initialize() {}
+        ALWAYS_INLINE bool Finalize() { return false; }
 
         ALWAYS_INLINE void Lock() {
             ::AcquireSRWLockExclusive(std::addressof(m_srw));

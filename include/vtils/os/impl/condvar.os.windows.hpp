@@ -19,10 +19,8 @@
 
 namespace vtils::impl {
 
-    /// @exclude
     constexpr inline DWORD WindowsInfinite = std::numeric_limits<DWORD>::max();
 
-    /// @exclude
     class CondVarImpl final {
     private:
         CONDITION_VARIABLE m_cond = CONDITION_VARIABLE_INIT;
@@ -33,15 +31,22 @@ namespace vtils::impl {
         ALWAYS_INLINE constexpr CondVarImpl() = default;
         ALWAYS_INLINE constexpr ~CondVarImpl() = default;
 
+        ALWAYS_INLINE void Initialize() {}
+        ALWAYS_INLINE bool Finalize() { return false; }
+
         ALWAYS_INLINE void Wait(MutexImpl &mutex) {
             auto res = ::SleepConditionVariableSRW(std::addressof(m_cond), mutex.Raw(), WindowsInfinite, 0);
             V_DEBUG_ASSERT(res != 0);
         }
 
-        ALWAYS_INLINE bool WaitTimeout(MutexImpl &mutex, std::chrono::milliseconds ms) {
-            auto timeout = std::min(ms.count(), static_cast<std::chrono::milliseconds::rep>(WindowsInfinite));
+        template <class Clock, class Duration>
+        ALWAYS_INLINE bool WaitUntil(MutexImpl &mutex, const std::chrono::time_point<Clock, Duration> &time) {
+            auto reltime = time - std::chrono::system_clock::now();
 
-            if (::SleepConditionVariableSRW(std::addressof(m_cond), mutex.Raw(), static_cast<DWORD>(timeout), 0) == 0) {
+            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(reltime);
+            auto duration = std::min(ms.count(), static_cast<std::chrono::milliseconds::rep>(WindowsInfinite));
+
+            if (::SleepConditionVariableSRW(std::addressof(m_cond), mutex.Raw(), static_cast<DWORD>(duration), 0) == 0) {
                 V_DEBUG_ASSERT(::GetLastError() == ERROR_TIMEOUT);
                 return false;
             } else {

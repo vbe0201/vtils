@@ -7,6 +7,7 @@
 
 #include <system_error>
 
+#include "vtils/assert.hpp"
 #include "vtils/macros/misc.hpp"
 #include "vtils/macros/platform.hpp"
 

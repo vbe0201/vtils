@@ -52,6 +52,7 @@ target_sources(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/misc.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/macros/platform.hpp
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/util_pointer_value.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/condvar.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/memory_mapped.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/mutex.hpp
@@ -83,7 +84,10 @@ if(UNIX)
     # These source files are only included for UNIX builds.
     target_sources(${PROJECT_NAME}
         PUBLIC
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/condvar.pthread.hpp
             ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/memory_mapped.unix.hpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/mutex.pthread.hpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/vtils/os/impl/read_write_lock.pthread.hpp
 
             ${CMAKE_CURRENT_SOURCE_DIR}/source/os/impl/memory_mapped.unix.cpp
         )

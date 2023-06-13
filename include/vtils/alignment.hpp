@@ -17,7 +17,6 @@ namespace vtils {
     namespace impl {
 
         // TODO: Move this elsewhere?
-        /// @exclude
         template <std::integral I>
         ALWAYS_INLINE constexpr bool IsPowerOfTwo(I value) {
             return (value > 0) && ((value & (value - 1)) == 0);

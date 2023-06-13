@@ -57,7 +57,6 @@
 /// this code at a later time.
 #define V_TODO() V_ASSERT_IMPL(false, "not yet implemented")
 
-/// @exclude
 #define V_ASSERT_IMPL(expr, ...)                                                              \
     [&, __v_assert_impl_source = std::source_location::current()]() ALWAYS_INLINE_LAMBDA {    \
         if (const bool __expr = static_cast<bool>(expr); !__expr) UNLIKELY {                  \
@@ -65,9 +64,8 @@
         }                                                                                     \
     }()
 
-/// @exclude
 #define V_CALL_ASSERT_FAIL_IMPL(source, expr, ...)                                       \
-    [](const std::source_location &source) ALWAYS_INLINE_LAMBDA {                        \
+    [&](const std::source_location &source) ALWAYS_INLINE_LAMBDA {                        \
         if (std::is_constant_evaluated()) {                                              \
             ::vtils::impl::ConstexprAssertionFailed("assertion failed at compile-time"); \
         } else {                                                                         \
@@ -77,15 +75,11 @@
 
 namespace vtils::impl {
 
-    /// @exclude
     inline void ConstexprAssertionFailed(const char *) {}
 
-    /// @exclude
     COLD NOINLINE NORETURN void AssertionFailed(const std::source_location &source, const char *expr);
-    /// @exclude
     COLD NOINLINE NORETURN void MonomorphizedAssertionFailed(const std::source_location &source, const char *expr, std::string_view fmt, fmt::format_args args);
 
-    /// @exclude
     template <typename... Args>
     COLD NORETURN void AssertionFailed(const std::source_location &source, const char *expr, std::string_view fmt, Args &&...args) {
         MonomorphizedAssertionFailed(source, expr, fmt, fmt::make_format_args(args...));
